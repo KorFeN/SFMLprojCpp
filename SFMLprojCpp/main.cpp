@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "GeometricalObject.h"
+#include "Circle.h"
 
 int main()
 {
@@ -12,6 +13,7 @@ int main()
 	shape.setFillColor(sf::Color::Green);
 
 	Player player;
+	Circle circle(Vector2f(100, 100), Vector2f(100, 100), 50);
 
 	sf::Clock dClock;
 
@@ -24,13 +26,16 @@ int main()
 				window.close();
 		}
 		player.update(dClock.getElapsedTime(), window);
+		circle.Update(dClock.getElapsedTime());
+		dClock.restart();
 
 		window.clear();
 		window.draw(player);
+		window.draw(circle);
 
 		window.display();
 
-		dClock.restart();
+		
 	}
 
 	return 0;
