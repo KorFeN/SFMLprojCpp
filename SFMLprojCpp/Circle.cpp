@@ -1,5 +1,4 @@
 #include "Circle.h"
-#include <iostream>
 
 Circle::Circle() : GeometricalObject()
 {
@@ -31,13 +30,11 @@ void Circle::Update(Time dTime)
 						  getPos().y + getSpeed().y * (float)dTime.asMicroseconds() / 1000000));
 	this->setRotation(getRotation() + getRotationSpeed() * (float)dTime.asMicroseconds() / 1000000);
 
-	std::cout << (float)dTime.asMicroseconds() / 1000000 << std::endl;
-
 	shape.setPosition(Vector2f(this->getPos().x, this->getPos().y));
 	shape.setRotation(this->getRotation());
 }
 
 IntRect Circle::getCollisionRect() const
 {
-	return IntRect();
+	return IntRect(shape.getGlobalBounds());
 }

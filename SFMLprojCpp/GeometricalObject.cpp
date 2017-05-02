@@ -11,7 +11,6 @@ GeometricalObject::GeometricalObject(Vector2f pos, float rotationSpeed, Vector2f
 {
 	this->pos = pos;
 	this->rotationSpeed = rotationSpeed;
-	//Speed is in 
 	this->speed = speed;
 }
 
