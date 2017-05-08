@@ -15,6 +15,7 @@ public:
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 	virtual void Update(Time dTime);
 	virtual IntRect getCollisionRect() const;
+
 private:
 	float radius;
 	CircleShape shape;

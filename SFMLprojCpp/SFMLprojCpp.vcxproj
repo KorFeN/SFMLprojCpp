@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="GameField.cpp" />
     <ClCompile Include="GeometricalObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="GameField.h" />
     <ClInclude Include="GeometricalObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rectangle.h" />
