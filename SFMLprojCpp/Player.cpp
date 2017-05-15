@@ -38,8 +38,17 @@ void Player::update(Time dTime, RenderWindow& window)
 	sprite.setPosition(pos);
 }
 
-Rect<int> Player::getCollisionRect() const
+FloatRect Player::getCollisionRect() const
 {
-	FloatRect bounds = sprite.getLocalBounds();
-	return Rect<int>((int)bounds.left, (int)bounds.top, (int)bounds.width, (int)bounds.height);
+	return sprite.getGlobalBounds();
+}
+
+Vector2f Player::getPos() const
+{
+	return pos;
+}
+
+float Player::getRadius() const
+{
+	return texture.getSize().x / 2;
 }

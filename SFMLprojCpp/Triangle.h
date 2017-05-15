@@ -14,7 +14,8 @@ public:
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 	virtual void Update(Time dTime);
-	virtual IntRect getCollisionRect() const;
+	virtual FloatRect getCollisionRect() const;
+	float getRadius() const;
 
 private:
 	float radius;

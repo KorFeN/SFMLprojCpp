@@ -17,6 +17,9 @@ public:
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 	virtual void Update(Time dTime, RenderWindow& window);
+	GeometricalObject** getObjectArray() const;
+	int getNrOfElements() const;
+	Player getPlayer() const;
 	void addObject();
 
 

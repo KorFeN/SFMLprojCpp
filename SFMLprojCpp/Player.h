@@ -14,7 +14,9 @@ public:
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 	void update(Time dTime, RenderWindow& window);
 
-	Rect<int> getCollisionRect() const;
+	FloatRect getCollisionRect() const;
+	Vector2f getPos() const;
+	float getRadius() const;
 
 private:
 	Vector2f pos;

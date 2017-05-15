@@ -15,6 +15,7 @@ Rectangle::Rectangle(Vector2f pos, Vector2f size, Vector2f speed, float rotation
 	this->shape.setPosition(pos);
 	this->shape.setRotation(this->getRotation());
 	this->shape.setSize(size);
+	this->setOrigin(Vector2f(size.x / 2, size.y / 2));
 }
 
 Rectangle::~Rectangle()
@@ -28,15 +29,15 @@ void Rectangle::draw(RenderTarget & target, RenderStates states) const
 
 void Rectangle::Update(Time dTime)
 {
-	this->setPos(Vector2f(getPos().x + getSpeed().x * (float)dTime.asMicroseconds() / 1000000,
-		getPos().y + getSpeed().y * (float)dTime.asMicroseconds() / 1000000));
-	this->setRotation(getRotation() + getRotationSpeed() * (float)dTime.asMicroseconds() / 1000000);
+	shape.setPosition(Vector2f(shape.getPosition().x + getSpeed().x * (float)dTime.asMicroseconds() / 1000000,
+							shape.getPosition().y + getSpeed().y * (float)dTime.asMicroseconds() / 1000000));
+	shape.setRotation(shape.getRotation() + getRotationSpeed() * (float)dTime.asMicroseconds() / 1000000);
 
-	shape.setPosition(Vector2f(this->getPos().x, this->getPos().y));
-	shape.setRotation(this->getRotation());
+	this->setPos(shape.getPosition());
+	this->setRotation(shape.getRotation());
 }
 
-IntRect Rectangle::getCollisionRect() const
+FloatRect Rectangle::getCollisionRect() const
 {
-	return IntRect(shape.getGlobalBounds());
+	return shape.getGlobalBounds();
 }

@@ -48,6 +48,21 @@ void GameField::Update(Time dTime, RenderWindow& window)
 	player.update(dTime, window);
 }
 
+GeometricalObject ** GameField::getObjectArray() const
+{
+	return this->objects;
+}
+
+int GameField::getNrOfElements() const
+{
+	return this->nrOfElements;
+}
+
+Player GameField::getPlayer() const
+{
+	return this->player;
+}
+
 void GameField::addObject()
 {
 	if (nrOfElements == size)
@@ -83,7 +98,7 @@ void GameField::removeObject(int index)
 {
 	if (nrOfElements > 0 && index < nrOfElements)
 	{
-		if (index == nrOfElements - 1)
+		if (index == (nrOfElements - 1))
 		{
 			delete objects[index];
 			objects[index] = nullptr;
@@ -112,7 +127,7 @@ void GameField::expandArr(int expandAmount)
 			else
 			{
 				Rectangle* cast2 = dynamic_cast<Rectangle*>(objects[i]);
-				if (cast != nullptr)
+				if (cast2 != nullptr)
 					temp[i] = new Rectangle(*cast2);
 				else
 				{

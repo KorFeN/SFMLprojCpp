@@ -13,7 +13,7 @@ public:
 
 	virtual void draw(RenderTarget& target, RenderStates states) const = 0;
 	virtual void Update(Time dTime) = 0;
-	virtual IntRect getCollisionRect() const = 0;
+	virtual FloatRect getCollisionRect() const = 0;
 	Vector2f getPos() const;
 	Vector2f getSpeed() const;
 	Vector2f getOrigin() const;
@@ -21,6 +21,7 @@ public:
 	float getRotation() const;
 	void setPos(Vector2f pos);
 	void setRotation(float rotation);
+	void setOrigin(Vector2f origin);
 
 
 private:

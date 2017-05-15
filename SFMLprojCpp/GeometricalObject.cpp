@@ -52,3 +52,8 @@ void GeometricalObject::setRotation(float rotation)
 {
 	this->rotation = rotation;
 }
+
+void GeometricalObject::setOrigin(Vector2f origin)
+{
+	this->origin = origin;
+}
