@@ -5,7 +5,8 @@ enum State
 {
 	_INGAME,
 	_MAINMENU,
-	_SCOREBOARD
+	_SCOREBOARD,
+	_QUIT
 };
 
 #endif // !GAMESTATE_H

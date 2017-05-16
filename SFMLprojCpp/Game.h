@@ -23,6 +23,7 @@ public:
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 	virtual void Update(Time dTime, RenderWindow& window);
 	bool getRunning() const;
+	void sendKeyInput(Keyboard::Key key);
 
 private:
 	GameField gameField;

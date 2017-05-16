@@ -6,12 +6,14 @@ int main()
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!", sf::Style::Default, settings);
-	window.setMouseCursorVisible(false);
+	sf::RenderWindow window(sf::VideoMode(800, 800), "Stay Alive", sf::Style::Default, settings);
+	window.setMouseCursorVisible(true);
 
 	Game game;
 
 	sf::Clock dClock;
+
+	Keyboard::Key prevKey = Keyboard::LControl;
 
 	while (window.isOpen() && game.getRunning() == true)
 	{
@@ -20,6 +22,16 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code != prevKey)
+					game.sendKeyInput(event.key.code);
+				prevKey = event.key.code;
+			}
+			if (event.type == sf::Event::KeyReleased)
+			{
+				prevKey = Keyboard::LControl;
+			}
 		}
 
 		game.Update(dClock.getElapsedTime(), window);

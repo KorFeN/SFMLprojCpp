@@ -3,7 +3,7 @@
 
 Game::Game()
 {
-	this->gameState = _INGAME;
+	this->gameState = _MAINMENU;
 	this->gameRunning = true;
 	this->spawnRate = startSpawnRate;
 }
@@ -16,7 +16,8 @@ void Game::draw(RenderTarget & target, RenderStates states) const
 {
 	if(gameState == _INGAME)
 		target.draw(gameField);
-
+	if (gameState == _SCOREBOARD || gameState == _MAINMENU)
+		target.draw(menu);
 }
 
 void Game::Update(Time dTime, RenderWindow & window)
@@ -46,15 +47,30 @@ void Game::Update(Time dTime, RenderWindow & window)
 			if (collision(player, objects[i]))
 			{
 				this->gameState = _SCOREBOARD;
+				menu.initScore(elapsedTime / 1000000);
+				menu.setMenu(_SCOREBOARD);
 			}
 		}
 	}
-	
+	if (gameState == _SCOREBOARD || gameState == _MAINMENU)
+	{
+		gameState = menu.Update(window);
+	}
+
+	if (gameState == _QUIT)
+	{
+		gameRunning = false;
+	}
 }
 
 bool Game::getRunning() const
 {
 	return this->gameRunning;
+}
+
+void Game::sendKeyInput(Keyboard::Key key)
+{
+	menu.sendKeyInput(key);
 }
 
 bool Game::collision(Player player, GeometricalObject* object) const
