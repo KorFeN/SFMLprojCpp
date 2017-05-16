@@ -47,7 +47,8 @@ void Game::Update(Time dTime, RenderWindow & window)
 			if (collision(player, objects[i]))
 			{
 				this->gameState = _SCOREBOARD;
-				menu.initScore(elapsedTime / 1000000);
+				window.setMouseCursorVisible(true);
+				menu.initScore(elapsedTime / 100000);
 				menu.setMenu(_SCOREBOARD);
 			}
 		}
@@ -105,46 +106,43 @@ bool Game::collision(Player player, GeometricalObject* object) const
 			Triangle* obj3 = dynamic_cast<Triangle*>(object);
 			if (obj3 != nullptr)
 			{
-				/*Vector2f pos(player.getPos().x, player.getPos().y);
-				trans.rotate(3 - (obj3->getRotation()), obj3->getPos());
+				Vector2f pos(player.getPos().x, player.getPos().y);
+				trans.rotate(360 - obj3->getRotation(), obj3->getPos());
 				FloatRect playerRect(trans.transformPoint(pos) - Vector2f(12, 12), Vector2f(20, 20));
 				Vector2f temp(obj3->getPos().x + obj3->getRadius(), obj3->getPos().y);
 				trans.rotate(-30, obj3->getPos());
-				Vector2f temp2 = temp;
 				temp = trans.transformPoint(temp);
 				if (playerRect.top - playerRect.height < temp.y)
 				{
-					if (FloatRect(temp2.x - (temp2.x - temp.x) * 2, temp.y, (temp2.x - temp.x) * 2, 40).intersects(playerRect))
+					if (FloatRect(obj3->getPos().x - (temp.x - obj3->getPos().x), temp.y, (temp.x - obj3->getPos().x) * 2, 10).intersects(playerRect))
 						collides = true;
 				}
 				else
 				{
-					trans.rotate(180 - obj3->getRotation(), obj3->getPos());
+					trans.rotate(240 - obj3->getRotation(), obj3->getPos());
 					playerRect = FloatRect(trans.transformPoint(pos) - Vector2f(12, 12), Vector2f(20, 20));
 					temp = Vector2f(obj3->getPos().x + obj3->getRadius(), obj3->getPos().y);
 					trans.rotate(-30, obj3->getPos());
-					temp2 = temp;
 					temp = trans.transformPoint(temp);
 					if (playerRect.top - playerRect.height < temp.y)
 					{
-						if (FloatRect(temp2.x - (temp2.x - temp.x) * 2, temp.y, (temp2.x - temp.x) * 2, 40).intersects(playerRect))
+						if (FloatRect(obj3->getPos().x - (temp.x - obj3->getPos().x), temp.y, (temp.x - obj3->getPos().x) * 2, 10).intersects(playerRect))
 							collides = true;
 					}
 					else
 					{
-						trans.rotate(60 - obj3->getRotation(), obj3->getPos());
+						trans.rotate(120 - obj3->getRotation(), obj3->getPos());
 						playerRect = FloatRect(trans.transformPoint(pos) - Vector2f(12, 12), Vector2f(20, 20));
 						temp = Vector2f(obj3->getPos().x + obj3->getRadius(), obj3->getPos().y);
 						trans.rotate(-30, obj3->getPos());
-						temp2 = temp;
 						temp = trans.transformPoint(temp);
 						if (playerRect.top - playerRect.height < temp.y)
 						{
-							if (FloatRect(temp2.x - (temp2.x - temp.x) * 2, temp.y, (temp2.x - temp.x) * 2, 10).intersects(playerRect))
+							if (FloatRect(obj3->getPos().x - (temp.x - obj3->getPos().x), temp.y, (temp.x - obj3->getPos().x) * 2, 10).intersects(playerRect))
 								collides = true;
 						}
 					}
-				}*/
+				}
 			}
 		}
 	}

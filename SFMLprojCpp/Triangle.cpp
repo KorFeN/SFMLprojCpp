@@ -23,14 +23,6 @@ Triangle::~Triangle()
 void Triangle::draw(RenderTarget & target, RenderStates states) const
 {
 	target.draw(shape);
-
-	sf::CircleShape cshape(shape.getRadius());
-	cshape.setPosition(shape.getPosition());
-	cshape.setOrigin(shape.getOrigin());
-	cshape.setFillColor(sf::Color(0, 0, 0, 0));
-	cshape.setOutlineThickness(4);
-	cshape.setOutlineColor(sf::Color(250, 150, 100));
-	target.draw(cshape);
 }
 
 void Triangle::Update(Time dTime)

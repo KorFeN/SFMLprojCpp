@@ -91,6 +91,7 @@ State Menu::Update(RenderWindow& window)
 			start.setFillColor(Color(255, 100, 100));
 			if (mouse.isButtonPressed(mouse.Left))
 			{
+				window.setMouseCursorVisible(false);
 				return _INGAME;
 			}
 		}
