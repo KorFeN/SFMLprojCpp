@@ -56,11 +56,20 @@ Menu::Menu()
 		nameText.setFillColor(Color(255, 255, 255));
 		nameText.setPosition(Vector2f(260, 200));
 
+		topFive.setFont(font);
+		topFive.setString("");
+		topFive.setCharacterSize(40);
+		topFive.setFillColor(Color(255, 255, 255));
+		topFive.setPosition(Vector2f(260, 200));
+
 	}
+	acceptInput = true;
+	scoresCount = 0;
 }
 
 Menu::~Menu()
 {
+	delete[] highscores;
 }
 
 void Menu::draw(RenderTarget & target, RenderStates states) const
@@ -78,6 +87,7 @@ void Menu::draw(RenderTarget & target, RenderStates states) const
 		target.draw(enterName);
 		target.draw(nameText);
 		target.draw(quit);
+		target.draw(topFive);
 	}
 }
 
@@ -133,6 +143,18 @@ State Menu::Update(RenderWindow& window)
 			quit.setFillColor(Color(255, 255, 255));
 		}
 
+		if (scoresCount > 0)
+		{
+			topFive.setString("");
+			for (int i = 0; i < 5; i++)
+			{
+				if (scoresCount > i)
+				{
+					topFive.setString(topFive.getString() + "\n" + std::to_string(highscores[i].getScore()) + " " + highscores[i].getName());
+				}
+			}
+		}
+
 		return _SCOREBOARD;
 	}
 }
@@ -141,6 +163,7 @@ void Menu::initScore(int highscore)
 {
 	this->currentHighscore = highscore;
 	this->yourScore.setString("Your score: " + std::to_string(highscore));
+	readFromFile(SCOREPATH);
 }
 
 void Menu::setMenu(State menuState)
@@ -152,17 +175,124 @@ void Menu::sendKeyInput(Keyboard::Key key)
 {
 	if (menuState == _SCOREBOARD)
 	{
-		if (key == Keyboard::Return)
+		if (key == Keyboard::Return && acceptInput == true)
 		{
-
+			acceptInput = false;
+			highscores[scoresCount] = Highscore(currentHighscore, name);
+			scoresCount++;
+			sortHighscores();
+			name = "";
+			saveToFile(SCOREPATH);
 		}
 		else
 		{
 			char keyChar = keyToChar(key);
-			if (keyChar != '\0')
+			if (keyChar != '\0' && acceptInput == true)
 				name += keyChar;
 		}
 	}	
+}
+
+void Menu::readFromFile(std::string path)
+{
+	ifstream stream;
+	stream.open(path);
+
+	int currentHSIndx = 0;
+	int score = 0;
+	string name = "";
+
+
+	while (!stream.eof())
+	{
+		string input;
+		getline(stream, input);
+
+		string* splInput = stringSplit(input);
+
+		if (splInput[0] == "<count>")
+		{
+			this->scoresCount = stoi(splInput[1]);
+			highscores = new Highscore[scoresCount + 1];
+		}
+		else if (splInput[0] == "<score>")
+		{
+			score = stoi(splInput[1]);
+		}
+		else if (splInput[0] == "<name>")
+		{
+			name = splInput[1];
+		}
+		else if (splInput[0] == "<endHighscore>")
+		{
+			highscores[currentHSIndx] = Highscore(score,name);
+			currentHSIndx++;
+			score = 0;
+			name = "";
+		}
+
+		delete[](splInput);
+	}
+
+	stream.close();
+}
+
+void Menu::saveToFile(std::string path) const
+{
+	std::ofstream stream;
+	stream.open(path);
+	stream << "<count> " + std::to_string(scoresCount);
+	for (int i = 0; i < scoresCount; i++)
+	{
+		stream << std::endl << std::endl << "<score> " + std::to_string(highscores[i].getScore()) << std::endl;
+		stream << "<name> " + highscores[i].getName() << std::endl;
+		stream << "<endHighscore>";
+	}
+	stream.close();
+}
+
+std::string * Menu::stringSplit(std::string str) const
+{
+	std::string str1 = "";
+	std::string str2 = "";
+	bool firstWord = true;
+	for (size_t i = 0; i < str.length(); i++)
+	{
+		if (str[i] == ' ' && firstWord == true)
+		{
+			firstWord = false;
+		}
+		else
+		{
+			if (firstWord)
+			{
+				str1.append(1, str[i]);
+			}
+			else
+			{
+				str2.append(1, str[i]);
+			}
+		}
+	}
+
+	return new std::string[2]{ str1, str2 };
+}
+
+void Menu::sortHighscores()
+{
+	
+	for (int i = (scoresCount - 1); i >= 0; i--)
+	{
+		for (int k = (scoresCount - i - 1); k >= 0 ; k--)
+		{
+			if (highscores[k].getScore() > highscores[k - 1].getScore())
+			{
+				Highscore temp = highscores[k];
+				highscores[k] = highscores[k - 1];
+				highscores[k - 1] = temp;
+			}
+		}
+	}
 }
 
 char Menu::keyToChar(Keyboard::Key key)

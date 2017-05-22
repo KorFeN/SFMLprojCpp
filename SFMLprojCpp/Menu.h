@@ -4,8 +4,12 @@
 #include "SFML\Graphics.hpp"
 #include "GameState.h"
 #include <string>
+#include <fstream>
+#include "Highscore.h"
 
 using namespace sf;
+
+const std::string SCOREPATH = "highscores.txt";
 
 class Menu : public Drawable
 {
@@ -38,6 +42,16 @@ private:
 	Text yourScore;
 	Text enterName;
 	Text nameText;
+	Text topFive;
+	Highscore* highscores;
+	int scoresCount;
+	bool acceptInput;
+	
+
+	void readFromFile(std::string path);
+	void saveToFile(std::string path) const;
+	std::string* stringSplit(std::string str) const;
+	void sortHighscores();
 
 	char keyToChar(Keyboard::Key key);
 

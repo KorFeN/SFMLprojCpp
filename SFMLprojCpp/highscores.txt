@@ -1,0 +1,29 @@
+<count> 7
+
+<score> 163
+<name> Oscar
+<endHighscore>
+
+<score> 81
+<name> jesper
+<endHighscore>
+
+<score> 44
+<name> trIangleSlayerxX
+<endHighscore>
+
+<score> 42
+<name> Karl
+<endHighscore>
+
+<score> 40
+<name> Bror
+<endHighscore>
+
+<score> 40
+<name> ee
+<endHighscore>
+
+<score> 40
+<name> ss
+<endHighscore>

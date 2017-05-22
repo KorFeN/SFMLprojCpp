@@ -10,6 +10,7 @@ int main()
 	window.setMouseCursorVisible(true);
 
 	Game game;
+	
 
 	sf::Clock dClock;
 
